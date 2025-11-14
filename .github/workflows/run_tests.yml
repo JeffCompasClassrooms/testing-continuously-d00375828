@@ -1,18 +1,59 @@
 name: Test Orchestrator
- 
-# Allows a “Run workflow” button in the Actions tab
+
 on:
   workflow_dispatch: {}
 
 jobs:
   run-tests:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout orchestrator repository
         uses: actions/checkout@v4
 
-      # ---- your tests go here ----
-      - name: Run test for repo 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # --- Repo 1: systems ---
+      - name: Checkout testing-systems repo
+        uses: actions/checkout@v4
+        with:
+          repository: JeffCompasClassrooms/testing-systems-d00375828
+          path: testing-systems
+
+      - name: Run tests for testing-systems
+        working-directory: testing-systems
         run: |
-          echo "Running tests..."
-          # replace this line with your actual test command(s)
+          python -m pip install --upgrade pip
+          pip install pytest pytest-describe behave requests
+          pytest
+
+      # --- Repo 2: behave ---
+      - name: Checkout testing-with-behave repo
+        uses: actions/checkout@v4
+        with:
+          repository: JeffCompasClassrooms/testing-with-behave-d00375828
+          path: testing-with-behave
+
+      - name: Run tests for testing-with-behave
+        working-directory: testing-with-behave
+        run: |
+          python -m pip install --upgrade pip
+          pip install behave pytest pytest-describe requests
+          python -m behave
+
+      # --- Repo 3: units ---
+      - name: Checkout testing-units repo
+        uses: actions/checkout@v4
+        with:
+          repository: JeffCompasClassrooms/se3150-testing-units-f25-SE3150-Testing-Unit
+          path: testing-units
+
+      - name: Run tests for testing-units
+        working-directory: testing-units
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-describe behave requests
+          pytest
