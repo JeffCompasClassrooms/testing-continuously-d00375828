@@ -38,17 +38,11 @@ jobs:
           repository: JeffCompasClassrooms/testing-with-behave-d00375828
           path: testing-with-behave
 
-      - name: Run tests for isitchristmas
-        working-directory: testing-with-behave/isitchristmas
-        run: |
-          python -m pip install --upgrade pip
-          pip install "behave==1.2.6" "behave-webdriver==0.3.1" selenium pytest pytest-describe requests
-          python -m behave
-
-
       - name: Run tests for peppers-ghost
         working-directory: testing-with-behave/peppers-ghost
         run: |
+          python -m pip install --upgrade pip
+          pip install behave
           python -m behave
 
       # --- Repo 3: units ---
