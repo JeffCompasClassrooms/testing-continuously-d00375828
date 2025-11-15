@@ -69,7 +69,7 @@ jobs:
       - name: Checkout testing-units repo
         uses: actions/checkout@v4
         with:
-          repository: JeffCompasClassrooms/se3150-testing-units-f25-SE3150-Testing-Units
+          repository: JeffCompasClassrooms/testing-units-f25-d00375828
           path: testing-units
 
       - name: Run tests for testing-units
